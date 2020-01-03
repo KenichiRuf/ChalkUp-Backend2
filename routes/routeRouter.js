@@ -35,12 +35,15 @@ router.post("/", async (req, res) => {
 
 router.post("/userRoute", async (req, res) => {
   const userRoute = req.body;
+  console.log("post");
   try {
+    console.log("try");
     const newUserRoute = await Routes.addUserRoute(userRoute);
     res
       .status(201)
       .json({ message: "Added New userRoute", userRoute: newUserRoute });
   } catch (error) {
+    console.log({ error, newUserRoute });
     res.status(500).json({ message: "Could Not Add userRoute", error: error });
   }
 });
