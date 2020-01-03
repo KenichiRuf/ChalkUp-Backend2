@@ -10,4 +10,4 @@ const findBy = async filter => {
     .first();
 };
 
-module.exports = { addUser, findUserBy };
+module.exports = { addUser, findBy };
