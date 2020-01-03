@@ -13,39 +13,39 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// router.post("/login", async (req, res) => {
-//   let { username, password } = req.body;
+router.post("/login", async (req, res) => {
+  let { username, password } = req.body;
 
-//   try {
-//     const user = await Users.findBy({ username });
+  try {
+    const user = await Users.findBy({ username });
 
-//     if (user && password === user.password) {
-//       const token = genToken(user);
-//       res.status(200).json({
-//         message: `Welcome ${user.username}!`,
-//         token
-//       });
-//     } else {
-//       res.status(401).json({ message: "Invalid Credentials" });
-//     }
-//   } catch (error) {
-//     res.status(500).json({ message: "Error logging in user", error: error });
-//   }
-// });
+    if (user && password === user.password) {
+      const token = genToken(user);
+      res.status(200).json({
+        message: `Welcome ${user.username}!`,
+        token
+      });
+    } else {
+      res.status(401).json({ message: "Invalid Credentials" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Error logging in user", error: error });
+  }
+});
 
-// const genToken = user => {
-//   const payload = {
-//     subject: "user",
-//     user: user
-//   };
+const genToken = user => {
+  const payload = {
+    subject: "user",
+    user: user
+  };
 
-//   const secret = process.env.JWT_SECRET;
+  const secret = process.env.JWT_SECRET;
 
-//   const options = {
-//     expiresIn: "1h"
-//   };
+  const options = {
+    expiresIn: "1h"
+  };
 
-//   return jwt.sign(payload, secret, options);
-// };
+  return jwt.sign(payload, secret, options);
+};
 
 module.exports = router;

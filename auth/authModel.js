@@ -4,4 +4,10 @@ const addUser = async user => {
   return await db("users").insert(user);
 };
 
-module.exports = { addUser };
+const findBy = async filter => {
+  return await db("users")
+    .where(filter)
+    .first();
+};
+
+module.exports = { addUser, findUserBy };
