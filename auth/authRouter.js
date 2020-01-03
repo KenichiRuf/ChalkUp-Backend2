@@ -18,7 +18,7 @@ router.post("/login", async (req, res) => {
 
   try {
     const user = await Users.findBy({ username });
-
+    console.log(user.password, password);
     if (user && password === user.password) {
       const token = genToken(user);
       res.status(200).json({
