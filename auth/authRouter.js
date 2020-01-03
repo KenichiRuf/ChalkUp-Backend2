@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 
 const Users = require("./authModel");
 
@@ -18,8 +19,7 @@ router.post("/login", async (req, res) => {
 
   try {
     const user = await Users.findBy({ username });
-    console.log(user.password, password);
-    if (user && password === user.password) {
+    if (user && bcrypt.compareSync(password, user.password)) {
       const token = genToken(user);
       res.status(200).json({
         message: `Welcome ${user.username}!`,
@@ -27,7 +27,6 @@ router.post("/login", async (req, res) => {
       });
     } else {
       res.status(401).json({ message: "Invalid Credentials" });
-      console.log({ user, password });
     }
   } catch (error) {
     res.status(500).json({ message: "Error logging in user", error: error });
